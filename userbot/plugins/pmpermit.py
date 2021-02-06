@@ -10,6 +10,7 @@ from userbot import ALIVE_NAME, CMD_HELP, CUSTOM_PMPERMIT
 from userbot.utils import admin_cmd
 
 PM_SECURITY = os.environ.get("PM_SECURITY", None)
+MAX_SPAM = os.environ.get("MAX_SPAM", None)
 PMPERMIT_PIC = os.environ.get("PMPERMIT_PIC", None)
 if PMPERMIT_PIC is None:
     WARN_PIC = "{PMPERMIT_PIC}"
@@ -204,7 +205,7 @@ if Var.PRIVATE_GROUP_ID is not None:
     async def do_pm_permit_action(chat_id, event):
         if chat_id not in PM_WARNS:
             PM_WARNS.update({chat_id: 0})
-        if PM_WARNS[chat_id] == 3:
+        if PM_WARNS[chat_id] == MAX_SPAM:
             r = await event.reply(USER_BOT_WARN_ZERO)
             await asyncio.sleep(3)
             await event.client(functions.contacts.BlockRequest(chat_id))
